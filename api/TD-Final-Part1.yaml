@@ -72,3 +72,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PaginatedTeams'
+
+    post:
+      summary: Create a new team
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Team'
+      responses:
+        '201':
+          description: Team created successfully.
