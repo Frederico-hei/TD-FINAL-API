@@ -43,3 +43,32 @@ paths:
       responses:
         "201":
           description: Competition created successfully.
+
+  /teams:
+    get:
+      summary: Get a list of teams
+      parameters:
+        - in: query
+          name: teamName
+          schema:
+            type: string
+          description: Filter teams by name.
+        - in: query
+          name: page
+          schema:
+            type: integer
+          required: true
+          description: The page number.
+        - in: query
+          name: pageSize
+          schema:
+            type: integer
+          required: true
+          description: The number of items per page.
+      responses:
+        '200':
+          description: A paginated list of teams.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedTeams'
