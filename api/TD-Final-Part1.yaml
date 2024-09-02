@@ -119,3 +119,141 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PaginatedPlayers'
+
+ post:
+      summary: Create a new player in a team
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Player'
+      responses:
+        '201':
+          description: Player created successfully.
+
+  /teams/{teamId}/competitions:
+    post:
+      summary: Associate a team with competitions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                competitionIds:
+                  type: array
+                  items:
+                    type: integer
+      responses:
+        '200':
+          description: Team successfully associated with competitions.
+
+  /teams/{teamId}/players/associate:
+    post:
+      summary: Associate a list of players with a team
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                playerIds:
+                  type: array
+                  items:
+                    type: integer
+      responses:
+        '200':
+          description: Players successfully associated with the team.
+
+components:
+  schemas:
+    Competition:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+        location:
+          type: string
+
+    Team:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+        slogan:
+          type: string
+        competitions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Competition'
+        players:
+          type: array
+          items:
+            $ref: '#/components/schemas/Player'
+
+    Player:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+        number:
+          type: integer
+        strongFoot:
+          type: string
+          enum:
+            - Left
+            - Right
+
+    PaginatedCompetitions:
+      type: object
+      properties:
+        totalItems:
+          type: integer
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Competition'
+        currentPage:
+          type: integer
+        totalPages:
+          type: integer
+
+    PaginatedTeams:
+      type: object
+      properties:
+        totalItems:
+          type: integer
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Team'
+        currentPage:
+          type: integer
+        totalPages:
+          type: integer
+
+    PaginatedPlayers:
+      type: object
+      properties:
+        totalItems:
+          type: integer
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Player'
+        currentPage:
+          type: integer
+        totalPages:
+          type: integer
