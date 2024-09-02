@@ -1,0 +1,45 @@
+openapi: 3.0.1
+info:
+  title: STD2032 TD-Final-Part1
+  description: API for managing football competitions, teams, and players.
+  version: 1.0.0
+
+servers:
+  - url: https://STD23032.football-competition.com
+
+paths:
+  /competitions:
+    get:
+      summary: Get the list of competitions
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+          required: true
+          description: The page number.
+        - in: query
+          name: pageSize
+          schema:
+            type: integer
+          required: true
+          description: The number of items per page.
+      responses:
+        "200":
+          description: A paginated list of competitions.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaginatedCompetitions"
+
+    post:
+      summary: Create a new competition
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Competition"
+      responses:
+        "201":
+          description: Competition created successfully.
