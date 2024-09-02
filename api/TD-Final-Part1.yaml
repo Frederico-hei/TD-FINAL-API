@@ -84,3 +84,38 @@ paths:
       responses:
         '201':
           description: Team created successfully.
+
+  /teams/{teamId}/players:
+    get:
+      summary: Get a list of players in a team
+      parameters:
+        - in: path
+          name: teamId
+          schema:
+            type: integer
+          required: true
+          description: The ID of the team.
+        - in: query
+          name: playerName
+          schema:
+            type: string
+          description: Filter players by name.
+        - in: query
+          name: page
+          schema:
+            type: integer
+          required: true
+          description: The page number.
+        - in: query
+          name: pageSize
+          schema:
+            type: integer
+          required: true
+          description: The number of items per page.
+      responses:
+        '200':
+          description: A paginated list of players.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedPlayers'
